@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 const express = require('express')
 const cors = require('cors')
 const server = express()
@@ -69,15 +69,31 @@ server.post('/dogs', (req, res) => {
     }
 })
 
+// Delete a dog :(
 
-const PORT = 5000
+    server.delete('/dogs/:id', (req, res)=> {
+        const { id } = req.params
+        const findDogById = dog => {
+            return dog.id == id
+        }
+        const foundDog = dogs.find(findDogById)
+        if (!foundDog) {
+    
+            res.status(400).json({ errorMessage: 'Can not find a dog with that ID'})
+        } else {
+            dogs = dogs.filter((dog)=>{
+                return dog.id != id
+            })
+            res.json({deleted: foundDog})
+        }
+    })
+
+
+// const PORT = 5000
+
+const PORT = process.env.PORT || 5000
 
 server.listen(PORT, () => {
     console.log(`Server is on port: ${PORT}`)
 })
 
-// const PORT = process.env.PORT || 5000
-
-//  server.listen(PORT, () => {
-//      console.log(`Server is on port: ${PORT}`)
-//     });
