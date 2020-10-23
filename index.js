@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express')
 const cors = require('cors')
 const server = express()
@@ -69,9 +70,14 @@ server.post('/dogs', (req, res) => {
 })
 
 
-const PORT = 5000
+// const PORT = 5000
 
-server.listen(PORT, () => {
-    console.log(`Server is on port: ${PORT}`)
-})
+// server.listen(PORT, () => {
+//     console.log(`Server is on port: ${PORT}`)
+// })
 
+const PORT = process.env.PORT || 5000
+
+ server.listen(PORT, () => {
+     console.log(`Server is on port: ${PORT}`)
+    });
